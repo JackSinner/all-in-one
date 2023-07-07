@@ -1,1 +1,1 @@
-not support english document
+# not support english document,[see china document](./README.md)。

@@ -1,16 +1,20 @@
 {
-    "name": "library/europe",
-    "description": "php library",
-    "type": "library",
-    "autoload": {
-        "psr-4": {
-            "Library\\Europe\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "Homies"
-        }
-    ],
-    "require": {}
+  "name": "library/europe",
+  "description": "php library",
+  "type": "library",
+  "autoload": {
+    "psr-4": {
+      "Library\\Europe\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Homies"
+    }
+  ],
+  "require": {
+    "php": ">=7.4",
+    "ext-curl": "*",
+    "ext-json": "*"
+  }
 }
