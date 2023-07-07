@@ -17,6 +17,9 @@
     }
   ]
 }
+
+修改以上内容到你的comopser.json后,如果存在composer.lock文件请使用composer update 来更新依赖包
+如果不存在composer.lock文件使用composer install 来安装依赖包
 ```
 
 ### 助通融合云短信使用方式
