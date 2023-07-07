@@ -1,3 +1,24 @@
+### 怎么安装
+
+#### 写入以下内容到你的composer.json文件里
+
+```json
+{
+  "require": {
+    //...
+    "library/europe": "v0.0.1"
+  },
+  //...
+  "repositories": [
+    {
+      "type": "vcs",
+      //如果你的git账号有@符号,使用%40代替
+      "url": "https://{你的git账号}:{你的git密码}@gitee.com/scoq/composer.git"
+    }
+  ]
+}
+```
+
 ### 助通融合云短信使用方式
 
 ```php
