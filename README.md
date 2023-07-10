@@ -61,7 +61,9 @@ if ($result===true){
 ### 微信小程序使用方式
 
 ```php
-$object = \Library\Europe\Accomplish\MiniWechat\MiniWechat::instance()->setConfig(
+use Library\Europe\Accomplish\MiniWechat\MiniWechat;
+use Library\Europe\Exception\BaseException;
+$object = MiniWechat::instance()->setConfig(
     array(
       'app_id' => 'xxxx',//微信小程序app id
       'secret' => 'xxxxxxx',//微信小程序密钥
@@ -70,6 +72,17 @@ $object = \Library\Europe\Accomplish\MiniWechat\MiniWechat::instance()->setConfi
 try {
     $sessionInfo = $object->code2session($post['js_code']);
 }catch (\Exception $exception){
-    
+    if ($exception instanceof BaseException) {
+          switch ($exception->getThrowType()) {
+              case BaseException::THROW_TYPE_HTTP_REQUEST:
+                  //http请求微信错误
+              case BaseException::THROW_TYPE_WECHAT:
+                  //http请求后微信返回错误
+              default:
+                  //其他错误
+          }
+        } else {
+                    
+    }
 }
 ```
