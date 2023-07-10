@@ -16,7 +16,7 @@ class FourPay extends AccomplishAbsClass
      * @param string $title 标题
      * @param string $content 支付详细描述
      * @param array $options 其他参数
-     * @return void
+     * @return array
      * @throws FourPayException
      * @throws HttpRequestException
      */
@@ -27,7 +27,7 @@ class FourPay extends AccomplishAbsClass
         array  $options = [],
         string $title = 'test payment',
         string $content = 'test payment'
-    )
+    ): array
     {
         //先入网一次
         $member = $this->register($user['mobile']);
