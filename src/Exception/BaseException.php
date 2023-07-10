@@ -16,6 +16,11 @@ class BaseException extends \Exception
      */
     const THROW_TYPE_WECHAT = 1;
 
+    /**
+     * 四方支付异常
+     */
+    const THROW_TYPE_FOUR_PAY = 2;
+
     protected function setThrowType(int $throwType = 0): self
     {
         $this->throwType = $throwType;

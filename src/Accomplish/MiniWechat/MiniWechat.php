@@ -8,14 +8,6 @@ use Library\Europe\Exception\WechatException;
 class MiniWechat extends AccomplishAbsClass
 {
 
-    protected array $config = [];
-
-    public function setConfig(array $config): self
-    {
-        $this->config = $config;
-        return $this;
-    }
-
     /**
      * 通过微信小程序jscode获取用户在微信的唯一标识
      * @param string $jsCode

@@ -15,6 +15,8 @@ abstract class AccomplishAbsClass
 
     protected Platform $platform;
 
+    protected array $config = [];
+
     protected function __construct()
     {
 
@@ -34,6 +36,12 @@ abstract class AccomplishAbsClass
         return self::$instance;
     }
 
+    public function setConfig(array $config): self
+    {
+        $this->config = array_merge($this->config, $config);
+        return $this;
+    }
+
 
     /**
      * @throws HttpRequestException
@@ -42,8 +50,8 @@ abstract class AccomplishAbsClass
     {
         try {
             //判断提交方式,默认json方式提交
-            $contentType = $headers['Content-Type'] ?? 'application/json';
-            if ($contentType == 'application/json') {
+            $isJson = array_filter($headers, fn($value) => str_replace(' ', '', $value) == 'Content-Type:application/json');
+            if ($isJson) {
                 //json方式提交
                 $body = json_encode($data);
             } else {
