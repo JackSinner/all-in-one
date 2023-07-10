@@ -90,6 +90,31 @@ try {
 
 ### 四方支付
 
-```php
+#### 目前只支持微信小程序支付
 
+```php
+ use Library\Europe\Accomplish\FourPay\FourPay;
+ $pay = FourPay::instance()->setConfig(array(
+    'merchant' => 'xxxxxx',//商户号
+    'key' => 'xxxxx',//商户密钥
+    'notice_url' => 'http://127.0.0.1/callback',//回调地址
+    'channel' => 'wx_lite',//微信小程序支付类型
+    'pass_code' => 'F4-104',//支付通道
+ ));
+ try {
+     $data = $pay->gotoPay(
+         [
+            'mobile' => '131xxxxxxxx',//手机号码
+            'openid' => 'xxxxxx',//微信小程序open_id
+         ],
+         'four_pay_20xxxxxxx',//自己平台的订单号
+         0.01,//支付金额
+         [
+             'app_id' => 'xxxxxx',//微信appid
+         ]
+     );
+ } catch (\Exception $exception) {
+    //..错误处理
+    $this->throwErrorResponse($exception->getMessage());
+ }
 ```
