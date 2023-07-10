@@ -57,3 +57,19 @@ if ($result===true){
     return sprintf("发送失败,失败原因:%s",$result);
 }
 ```
+
+### 微信小程序使用方式
+
+```php
+$object = \Library\Europe\Accomplish\MiniWechat\MiniWechat::instance()->setConfig(
+    array(
+      'app_id' => 'xxxx',//微信小程序app id
+      'secret' => 'xxxxxxx',//微信小程序密钥
+    )
+);
+try {
+    $sessionInfo = $object->code2session($post['js_code']);
+}catch (\Exception $exception){
+    
+}
+```

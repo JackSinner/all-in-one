@@ -14,9 +14,8 @@ interface SmsInterface
 
     /**
      * 获取单例
-     * @return SmsInterface
      */
-    public static function instance(): SmsInterface;
+    public static function instance(): object;
 
     /**
      * 获取签名数据

@@ -11,7 +11,7 @@ abstract class AccomplishAbsClass
 {
 
 
-    protected static ?SmsInterface $instance = null;
+    protected static ?object $instance = null;
 
     protected Platform $platform;
 
@@ -25,7 +25,7 @@ abstract class AccomplishAbsClass
 
     }
 
-    public static function instance(): SmsInterface
+    public static function instance(): object
     {
         if (!self::$instance) {
             self::$instance = new static();
@@ -77,5 +77,33 @@ abstract class AccomplishAbsClass
         return array(
             'Content-Type:application/json',
         );
+    }
+
+    final protected function get(string $url, array $data = [], array $headers = [])
+    {
+        try {
+            if ($data) {
+                $query = http_build_query($data);
+                $url = sprintf("%s?%s", $url, $query);
+            }
+            $c = curl_init();
+            curl_setopt_array($c, array(
+                CURLOPT_URL => $url,
+                CURLOPT_POST => false,
+                CURLOPT_HTTPHEADER => $headers,
+                CURLOPT_RETURNTRANSFER => true,
+            ));
+            $res = curl_exec($c);
+            if ($res === false) {
+                if (curl_errno($c) != 0) {
+                    throw new \Exception(curl_error($c));
+                }
+            }
+            return json_decode($res, true);
+        } catch (\Exception $exception) {
+            throw new HttpRequestException($exception->getMessage(), $exception->getCode(), $exception->getPrevious());
+        } finally {
+            isset($c) && curl_close($c);
+        }
     }
 }
