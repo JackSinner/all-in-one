@@ -128,7 +128,7 @@ class FourPay extends AccomplishAbsClass
         );
     }
 
-    private function getSign(array $params): string
+    public function getSign(array $params): string
     {
         ksort($params);
         $str = json_encode($params, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
