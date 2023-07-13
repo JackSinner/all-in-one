@@ -5,7 +5,6 @@ namespace Library\Europe\Accomplish\FourPay;
 use Library\Europe\Accomplish\AccomplishAbsClass;
 use Library\Europe\Exception\FourPayException;
 use Library\Europe\Exception\HttpRequestException;
-use Library\Europe\Exception\WechatException;
 
 /**
  * @property Config $config
@@ -51,10 +50,10 @@ class FourPay extends AccomplishAbsClass
         $body['sign'] = $this->getSign($body);
         $result = $this->post(Url::PAY_URI, $body, $this->buildFourPayHeader());
         $code = $result['code'] ?? null;
-        if (!$code) {
-            throw new WechatException('请求支付失败');
+        if (is_null($code)) {
+            throw new FourPayException('请求支付失败');
         } else if ($code != 1) {
-            throw new WechatException($result['msg']);
+            throw new FourPayException($result['msg']);
         }
         return $result['data'];
     }
