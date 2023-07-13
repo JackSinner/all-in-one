@@ -26,7 +26,7 @@ abstract class AccomplishAbsClass
 
     }
 
-    public static function instance(): object
+    final public static function instance(): object
     {
         if (!self::$instance) {
             self::$instance = new static();
@@ -35,7 +35,7 @@ abstract class AccomplishAbsClass
         return self::$instance;
     }
 
-    public function setConfig(BaseConfig $config): self
+    final public function setConfig(BaseConfig $config): self
     {
         $this->config = $config;
         return $this;
