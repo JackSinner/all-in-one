@@ -3,7 +3,6 @@
 namespace Library\Europe\Accomplish;
 
 use Library\Europe\Exception\HttpRequestException;
-use Library\Europe\Interfaces\Sms\SmsInterface;
 use Library\Europe\Platform\Platform;
 
 
@@ -15,7 +14,7 @@ abstract class AccomplishAbsClass
 
     protected Platform $platform;
 
-    protected array $config = [];
+    protected BaseConfig $config;
 
     protected function __construct()
     {
@@ -36,9 +35,9 @@ abstract class AccomplishAbsClass
         return self::$instance;
     }
 
-    public function setConfig(array $config): self
+    public function setConfig(BaseConfig $config): self
     {
-        $this->config = array_merge($this->config, $config);
+        $this->config = $config;
         return $this;
     }
 

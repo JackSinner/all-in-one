@@ -5,6 +5,9 @@ namespace Library\Europe\Accomplish\MiniWechat;
 use Library\Europe\Accomplish\AccomplishAbsClass;
 use Library\Europe\Exception\WechatException;
 
+/**
+ * @property Config $config
+ */
 class MiniWechat extends AccomplishAbsClass
 {
 
@@ -18,8 +21,8 @@ class MiniWechat extends AccomplishAbsClass
     public function code2session(string $jsCode)
     {
         $result = $this->get(Url::CODE_2_SESSION_URI, array(
-            'appid' => $this->config['app_id'],
-            'secret' => $this->config['secret'],
+            'appid' => $this->config->appId,
+            'secret' => $this->config->secret,
             'js_code' => $jsCode,
             'grant_type' => 'authorization_code',
         ));

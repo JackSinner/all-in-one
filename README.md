@@ -26,15 +26,16 @@
 
 ```php
 <?php
-
+use \Library\Europe\Accomplish\FusionCloud\Sms;
+use \Library\Europe\Accomplish\FusionCloud\Config;
 //获取单例
-$object=\Library\Europe\Accomplish\FusionCloud\Sms::instance();
+$object=Sms::instance()->setConfig(new Config("user_name","password","签名","213"));
 
 //设置发送方式,发送方式包括1模板短信,2自定义短信。模板短信一次审核后面不用在审核就可以立即发送出短信，
 //相反的自定义短信需要每次都审核才会发送短信。
 
 //发送自定义短信实例
-$object->setSendType(\Library\Europe\Accomplish\FusionCloud\Sms::SMS_SEND_TYPE_CUSTOM);
+$object->setSendType(Sms::SMS_SEND_TYPE_CUSTOM);
 
 //调用send发送短信,send会返回true|string。true为发送成功,如果为string类型,就是失败的原因
 $result=$object->send("153xxxxxxx","这是一条测试短信");
@@ -45,11 +46,11 @@ if ($result===true){
 }
 
 //发送模板短信实例
-$object->setSendType(\Library\Europe\Accomplish\FusionCloud\Sms::SMS_SEND_TYPE_TP);
+$object->setSendType(Sms::SMS_SEND_TYPE_TP);
 
 //发送模板短信的时候,第二个参数为替换的模板变量内容
 $result=$object->send('153xxxxxxxx',[
-    'code'=>'1234',
+    'code'=>'1234',//需要替换模板的变量
 ]);
 if ($result===true){
     return "发送成功";
@@ -63,12 +64,9 @@ if ($result===true){
 ```php
 use Library\Europe\Accomplish\MiniWechat\MiniWechat;
 use Library\Europe\Exception\BaseException;
-$object = MiniWechat::instance()->setConfig(
-    array(
-      'app_id' => 'xxxx',//微信小程序app id
-      'secret' => 'xxxxxxx',//微信小程序密钥
-    )
-);
+use \Library\Europe\Accomplish\MiniWechat\Config;
+
+$object = MiniWechat::instance()->setConfig(new Config('小程序appid','小程序密钥'));
 try {
     $sessionInfo = $object->code2session($post['js_code']);
 }catch (\Exception $exception){
@@ -94,12 +92,12 @@ try {
 
 ```php
  use Library\Europe\Accomplish\FourPay\FourPay;
- $pay = FourPay::instance()->setConfig(array(
-    'merchant' => 'xxxxxx',//商户号
-    'key' => 'xxxxx',//商户密钥
-    'notice_url' => 'http://127.0.0.1/callback',//回调地址
-    'channel' => 'wx_lite',//微信小程序支付类型
-    'pass_code' => 'F4-104',//支付通道
+ use \Library\Europe\Accomplish\FourPay\Config;
+ $pay = FourPay::instance()->setConfig(new Config(
+    "商户id",
+    "商户key",
+    "wx_lite",//微信小程序支付
+    "F4-104"
  ));
  try {
      $data = $pay->gotoPay(
@@ -115,6 +113,6 @@ try {
      );
  } catch (\Exception $exception) {
     //..错误处理
-    $this->throwErrorResponse($exception->getMessage());
+    
  }
 ```

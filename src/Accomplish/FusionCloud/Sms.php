@@ -5,6 +5,9 @@ namespace Library\Europe\Accomplish\FusionCloud;
 use Library\Europe\Accomplish\AccomplishAbsClass;
 use Library\Europe\Interfaces\Sms\SmsInterface;
 
+/**
+ * @property Config $config
+ */
 class Sms extends AccomplishAbsClass implements SmsInterface
 {
 
@@ -30,15 +33,15 @@ class Sms extends AccomplishAbsClass implements SmsInterface
 
     final private function sendTp(string $phone, array $content)
     {
-        $userName = $this->platform->getConfig('user_name');
+        $userName = $this->config->userName;
         if (!$userName) {
             throw new \Exception('账号未配置');
         }
-        $sign = $this->platform->getConfig('sign');
+        $sign = $this->config->sign;
         if (!$sign) {
             throw new \Exception('短信签名未配置');
         }
-        $tplId = $this->platform->getConfig('tpl_id');
+        $tplId = $this->config->tplId;
         if (!$tplId) {
             throw new \Exception('模板id未设置');
         }
@@ -69,11 +72,11 @@ class Sms extends AccomplishAbsClass implements SmsInterface
      */
     final private function getCommonParams(): array
     {
-        $userName = $this->platform->getConfig('user_name');
+        $userName = $this->config->userName;
         if (!$userName) {
             throw new \Exception("账号未配置");
         }
-        $password = $this->platform->getConfig('password');
+        $password = $this->config->password;
         if (!$password) {
             throw new \Exception('密钥未配置');
         }
@@ -88,7 +91,7 @@ class Sms extends AccomplishAbsClass implements SmsInterface
 
     final private function sendCustomSms(string $phone, string $content)
     {
-        $sign = $this->platform->getConfig('sign');
+        $sign = $this->config->sign;
         if (!$sign) {
             throw new \Exception('短信签名未设置');
         }
@@ -118,7 +121,7 @@ class Sms extends AccomplishAbsClass implements SmsInterface
 
     public function getSign($timestamp): string
     {
-        $password = $this->platform->getConfig('password');
+        $password = $this->config->password;
         return md5(md5($password) . $timestamp);
     }
 }

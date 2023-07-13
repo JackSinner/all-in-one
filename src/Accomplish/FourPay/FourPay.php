@@ -7,6 +7,9 @@ use Library\Europe\Exception\FourPayException;
 use Library\Europe\Exception\HttpRequestException;
 use Library\Europe\Exception\WechatException;
 
+/**
+ * @property Config $config
+ */
 class FourPay extends AccomplishAbsClass
 {
     /**
@@ -31,19 +34,19 @@ class FourPay extends AccomplishAbsClass
     {
         //先入网一次
         $member = $this->register($user['mobile']);
-        $this->setConfig(['member' => $member]);
+        $this->config->member = $member;
         //发起支付
         $body = [
-            'member' => $this->config['member'],
-            'channel' => $this->config['channel'],
+            'member' => $this->config->member,
+            'channel' => $this->config->channel,
             'order_num' => $orderNo,
             'amount' => $amount,
-            'pass_code' => $this->config['pass_code'],
+            'pass_code' => $this->config->passCode,
             'title' => $title,
             'body' => $content,
             'ip' => $_SERVER['REMOTE_ADDR'],
-            'request_config' => $this->getRequestConfig($user, $this->config['channel'], $options),
-            'notice_url' => $this->config['notice_url'],
+            'request_config' => $this->getRequestConfig($user, $this->config->channel, $options),
+            'notice_url' => $this->config->noticeUrl,
         ];
         $body['sign'] = $this->getSign($body);
         $result = $this->post(Url::PAY_URI, $body, $this->buildFourPayHeader());
@@ -123,7 +126,7 @@ class FourPay extends AccomplishAbsClass
     private function buildFourPayHeader(): array
     {
         return array(
-            'merchant:' . $this->config['merchant'],
+            'merchant:' . $this->config->merchant,
             'Content-Type:application/json'
         );
     }
@@ -132,6 +135,6 @@ class FourPay extends AccomplishAbsClass
     {
         ksort($params);
         $str = json_encode($params, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-        return md5($str . $this->config['key']);
+        return md5($str . $this->config->key);
     }
 }
