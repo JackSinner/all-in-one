@@ -9,4 +9,7 @@ class Url
 
     //支付接口
     const PAY_URI = 'https://pay.dd88.vip/api/index/pay';
+
+    //绑定结算卡接口
+    const BIND_SETTLEMENT_CARD_URI = 'https://pay.dd88.vip/api/index/bindBankCard';
 }

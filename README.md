@@ -97,7 +97,8 @@ try {
     "商户id",
     "商户key",
     "wx_lite",//微信小程序支付
-    "F4-104"
+    "F4-104",
+    "回调地址",
  ));
  try {
      $data = $pay->gotoPay(

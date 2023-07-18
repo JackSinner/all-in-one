@@ -5,12 +5,20 @@ namespace Library\Europe\Accomplish\FourPay;
 use Library\Europe\Accomplish\AccomplishAbsClass;
 use Library\Europe\Exception\FourPayException;
 use Library\Europe\Exception\HttpRequestException;
+use Library\Europe\Interfaces\FourPay\FourPayInterface;
 
 /**
  * @property Config $config
  */
-class FourPay extends AccomplishAbsClass
+class FourPay extends AccomplishAbsClass implements FourPayInterface
 {
+
+
+    /**
+     * 结算卡绑定方式-对私
+     */
+    const BANK_ACCT_TYPE = 2;
+
     /**
      * @param array $user 用户信息
      * @param string $orderNo 订单编号
@@ -135,5 +143,30 @@ class FourPay extends AccomplishAbsClass
         ksort($params);
         $str = json_encode($params, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         return md5($str . $this->config->key);
+    }
+
+    public function bindSettlementCard(string $member, string $cardName, string $certId, string $cardId, string $telNo, int $bankAcctType = 2): array
+    {
+        if ($bankAcctType != 2) {
+            throw new FourPayException('还不支持绑定企业银行卡');
+        }
+        $body = [
+            'member' => $member,
+            'pass_code' => $this->config->passCode,
+            'bank_acct_type' => $bankAcctType,
+            'card_id' => $cardId,
+            'tel_no' => $telNo,
+            'card_name' => $cardName,
+            'cert_id' => $certId,
+        ];
+        $body['sign'] = $this->getSign($body);
+        $res = $this->post(Url::BIND_SETTLEMENT_CARD_URI, $body, $this->buildFourPayHeader());
+        if (!isset($res['code'])) {
+            throw new \Exception('系统错误');
+        } else if ($res['code'] != 1) {
+            //返回了错误
+            throw new FourPayException($res['msg']);
+        }
+        return $res['data'];
     }
 }
