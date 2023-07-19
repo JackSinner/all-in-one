@@ -117,3 +117,20 @@ try {
     
  }
 ```
+
+### ipyy发送短信
+
+```php
+ use \Library\Europe\Accomplish\IpyySms\IpyySms;
+ use \Library\Europe\Accomplish\IpyySms\Config;
+ try {
+    $object = IpyySms::instance()->setConfig(new Config(
+        'user_name',//账号
+        'user_pass',//短信密码
+        'sign'//签名
+    ));
+    $res = $object->send('153xxxxxxxx','5141');
+ }catch (\Exception $exception){
+    //..错误处理
+ }
+```

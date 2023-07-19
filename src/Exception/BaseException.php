@@ -21,6 +21,11 @@ class BaseException extends \Exception
      */
     const THROW_TYPE_FOUR_PAY = 2;
 
+    /**
+     * ipyy发送短信异常
+     */
+    const THROW_TYPE_IPPY_SMS = 3;
+
     protected function setThrowType(int $throwType = 0): self
     {
         $this->throwType = $throwType;
