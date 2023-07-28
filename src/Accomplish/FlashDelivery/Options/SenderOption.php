@@ -12,15 +12,15 @@ class SenderOption extends BaseConfig
     public string $fromMobile;
     public string $fromLatitude;
     public string $fromLongitude;
-    public string $fromAddressDetail;
+    public ?string $fromAddressDetail = null;
 
     public function __construct(
-        string $fromAddress,
-        string $fromSenderName,
-        string $fromMobile,
-        string $fromLatitude,
-        string $fromLongitude,
-        string $fromAddressDetail
+        string  $fromAddress,
+        string  $fromSenderName,
+        string  $fromMobile,
+        string  $fromLatitude,
+        string  $fromLongitude,
+        ?string $fromAddressDetail = null
     )
     {
         $this->fromAddress = $fromAddress;

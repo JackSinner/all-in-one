@@ -15,18 +15,18 @@ class ReceiverListOption extends BaseConfig
     public int $weight;
     public string $toLatitude;
     public string $toLongitude;
-    public string $toAddressDetail;
+    public ?string $toAddressDetail = null;
 
     public function __construct(
-        string $orderNo,
-        string $toAddress,
-        string $toReceiverName,
-        string $toMobile,
-        int    $goodType,
-        int    $weight,
-        string $toLatitude,
-        string $toLongitude,
-        string $toAddressDetail
+        string  $orderNo,
+        string  $toAddress,
+        string  $toReceiverName,
+        string  $toMobile,
+        int     $goodType,
+        int     $weight,
+        string  $toLatitude,
+        string  $toLongitude,
+        ?string $toAddressDetail = null
     )
     {
         $this->orderNo = $orderNo;

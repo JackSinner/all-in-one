@@ -134,3 +134,43 @@ try {
     //..错误处理
  }
 ```
+
+### 闪送
+
+```php
+use \Library\Europe\Accomplish\FlashDelivery\FlashDelivery;
+use \Library\Europe\Accomplish\FlashDelivery\Options\OrderCalculateOption;
+use \Library\Europe\Accomplish\FlashDelivery\Options\SenderOption;
+use \Library\Europe\Accomplish\FlashDelivery\Options\ReceiverListOption;
+use \Library\Europe\Accomplish\FlashDelivery\Config;
+try {
+    $object = FlashDelivery::instance()->setConfig(new Config(
+        '2000xxxxxxxxxxx',
+        'ssfxxxxxxxxxUzU',
+        '98fxxxxxxxxxxxxxxxxxc1zHw1I',
+    ));
+    $res = $object->orderCalculate(new OrderCalculateOption(
+        '成都市',//城市
+        OrderCalculateOption::APPOINT_TYPE_NOW,//立即送
+        new SenderOption(//寄件信息
+            $data['fromAddress'],
+            $data['fromSenderName'],
+            $data['fromMobile'],
+            $data['fromLatitude'],
+            $data['fromLongitude'],
+        ),
+        new ReceiverListOption(//收件信息
+            $order['order_no'],
+            $data['toAddress'],
+            $data['toReceiverName'],
+            $data['toMobile'],
+            $data['goodType'],
+            $data['weight'],
+            $data['toLatitude'],
+            $data['toLongitude'],
+        ),
+    ));
+}catch (\Exception $exception){
+    //..错误处理
+}
+```

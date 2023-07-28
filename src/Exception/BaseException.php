@@ -26,6 +26,11 @@ class BaseException extends \Exception
      */
     const THROW_TYPE_IPPY_SMS = 3;
 
+    /**
+     * 闪送异常
+     */
+    const THROW_TYPE_FLASH_DELIVERY = 4;
+
     protected function setThrowType(int $throwType = 0): self
     {
         $this->throwType = $throwType;

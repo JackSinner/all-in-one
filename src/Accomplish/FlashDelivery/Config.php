@@ -12,6 +12,10 @@ class Config extends BaseConfig
 
     //生产环境
     const MODEL_PROD_ENV = 1;
+    public int $model = self::MODEL_PROD_ENV;
+    public string $app_secret;
+    public string $client_id;
+    public string $shop_id;
 
     public function __construct(string $shop_id, string $client_id, string $app_secret, int $model = self::MODEL_PROD_ENV)
     {
