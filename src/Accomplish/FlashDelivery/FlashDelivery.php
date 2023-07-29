@@ -49,6 +49,23 @@ class FlashDelivery extends AccomplishAbsClass
         return $res['data'];
     }
 
+    /**
+     *
+     * @return mixed
+     * @throws FlashDeliverException
+     * @throws \Library\Europe\Exception\HttpRequestException
+     */
+    public function getUserAccount()
+    {
+        $res = $this->post(Url::GET_USER_ACCOUNT_URI, $this->buildBody([]), $this->buildHeaders());
+        if (!isset($res['status'])) {
+            throw new \Exception("系统错误");
+        } else if ($res['status'] != 200) {
+            throw new FlashDeliverException($res['msg']);
+        }
+        return $res['data'];
+    }
+
 
     public function buildHeaders(): array
     {
