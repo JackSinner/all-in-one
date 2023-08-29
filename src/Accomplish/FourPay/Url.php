@@ -12,4 +12,8 @@ class Url
 
     //绑定结算卡接口
     const BIND_SETTLEMENT_CARD_URI = 'https://pay.dd88.vip/api/index/bindBankCard';
+
+
+    //退款接口
+    const REFUND_URI = 'https://pay.dd88.vip/api/index/order_refund';
 }

@@ -37,4 +37,13 @@ interface FourPayInterface
      * @return mixed
      */
     public function bindSettlementCard(string $member, string $cardName, string $certId, string $cardId, string $telNo, int $bankAcctType = 2): array;
+
+    /**
+     * @param string $mobile 商户的用户手机号
+     * @param string $refundOrderNo 平台退款订单号
+     * @param string $originOrderNo 支付下单时的平台订单号
+     * @param float $amount 退款金额,小于等于订单金额
+     * @param string $remark 备注
+     */
+    public function refund(string $mobile, string $refundOrderNo, string $originOrderNo, float $amount, string $remark = '申请退款');
 }

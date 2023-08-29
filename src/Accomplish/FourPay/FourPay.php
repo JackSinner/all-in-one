@@ -20,6 +20,11 @@ class FourPay extends AccomplishAbsClass implements FourPayInterface
     const BANK_ACCT_TYPE = 2;
 
     /**
+     * @var string|null  用户商户号
+     */
+    private ?string $member = null;
+
+    /**
      * @param array $user 用户信息
      * @param string $orderNo 订单编号
      * @param float $amount 支付金额
@@ -53,7 +58,7 @@ class FourPay extends AccomplishAbsClass implements FourPayInterface
             'body' => $content,
             'ip' => $_SERVER['REMOTE_ADDR'],
             'request_config' => $this->getRequestConfig($user, $this->config->channel, $options),
-            'notice_url' => $this->config->noticeUrl,
+            'notice_url' => $this->config->payNoticeUrl,
         ];
         $body['sign'] = $this->getSign($body);
         $result = $this->post(Url::PAY_URI, $body, $this->buildFourPayHeader());
@@ -95,6 +100,9 @@ class FourPay extends AccomplishAbsClass implements FourPayInterface
         array   $bank = []
     ): string
     {
+        if (!is_null($this->member)) {
+            return $this->member;
+        }
         $body = array(
             'mobile' => $mobile,
         );
@@ -127,6 +135,7 @@ class FourPay extends AccomplishAbsClass implements FourPayInterface
         if (!$member) {
             throw new FourPayException('获取子商户号失败');
         }
+        $this->member = $member;
         return $member;
     }
 
@@ -168,5 +177,35 @@ class FourPay extends AccomplishAbsClass implements FourPayInterface
             throw new FourPayException($res['msg']);
         }
         return $res['data'];
+    }
+
+    /**
+     * @param string $mobile 商户的用户手机号
+     * @param string $refundOrderNo 平台退款订单号
+     * @param string $originOrderNo 支付下单时的平台订单号
+     * @param float $amount 退款金额,小于等于订单金额
+     * @param string $remark 备注
+     */
+    public function refund(string $mobile, string $refundOrderNo, string $originOrderNo, float $amount, string $remark = '申请退款')
+    {
+        $member = $this->register($mobile);
+        $requestBody = [
+            'member' => $member,
+            'order_num' => $refundOrderNo,
+            'refund_order_num' => $originOrderNo,
+            'amount' => $amount,
+            'notice_url' => $this->config->refundNoticeUrl,
+            'request_config' => [
+                'reason' => $remark,
+            ],
+        ];
+        $requestBody['sign'] = $this->getSign($requestBody);
+        $result = $this->post(Url::REFUND_URI, $requestBody, $this->buildFourPayHeader());
+        if (!isset($result['code'])) {
+            throw new \Exception('请求退款接口失败');
+        }
+        if ($result['code'] != 1) {
+            throw new FourPayException($result['msg']);
+        }
     }
 }

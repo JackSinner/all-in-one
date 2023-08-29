@@ -15,7 +15,10 @@ class Config extends BaseConfig
 
     public string $passCode;
 
-    public string $noticeUrl;
+    public string $payNoticeUrl;
+
+    public string $refundNoticeUrl;
+
     public string $member;
 
     /**
@@ -23,15 +26,17 @@ class Config extends BaseConfig
      * @param string $key 密钥
      * @param string $channel 支付通道
      * @param string $passCode 通道code
-     * @param string $noticeUrl 回调地址
+     * @param string $payNoticeUrl 支付回调地址
+     * @param string $refundNoticeUrl 退款回调地址
      */
-    public function __construct(string $merchant, string $key, string $channel, string $passCode, string $noticeUrl)
+    public function __construct(string $merchant, string $key, string $channel, string $passCode, string $payNoticeUrl, string $refundNoticeUrl)
     {
         $this->merchant = $merchant;
         $this->key = $key;
         $this->channel = $channel;
         $this->passCode = $passCode;
-        $this->noticeUrl = $noticeUrl;
+        $this->payNoticeUrl = $payNoticeUrl;
+        $this->refundNoticeUrl = $refundNoticeUrl;
     }
 
 }
