@@ -15,7 +15,6 @@ class BaseConfig
         $proper = $ref->getProperties();
         if ($proper) {
             foreach ($proper as $item) {
-                /** @var \ReflectionProperty $item */
                 if ($item->isPublic()) {
                     $value = $item->getValue($this);
                     if (!is_null($value)) {

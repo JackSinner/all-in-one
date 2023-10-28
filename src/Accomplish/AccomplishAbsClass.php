@@ -86,6 +86,13 @@ abstract class AccomplishAbsClass
         );
     }
 
+    final protected function buildXWWWFormUrlEncodeHeader(): array
+    {
+        return array(
+            'Content-Type:application/x-www-form-urlencoded',
+        );
+    }
+
     final protected function get(string $url, array $data = [], array $headers = [])
     {
         try {
@@ -112,5 +119,19 @@ abstract class AccomplishAbsClass
         } finally {
             isset($c) && curl_close($c);
         }
+    }
+
+    /**
+     * 循环组合url查询参数
+     * @param array $data
+     * @return false|string
+     */
+    final public function eachBuildQuery(array $data)
+    {
+        $query = '';
+        foreach ($data as $key => $value) {
+            $query .= "{$key}={$value}&";
+        }
+        return substr($query, 0, -1);
     }
 }
