@@ -41,7 +41,7 @@ class ExpressDelivery extends AccomplishAbsClass
             'sign' => $this->sign($params),
             'param' => $params,
         ];
-        $res = $this->post(Url::SYNC_QUERY_URI . '?' . $this->eachBuildQuery($data), $this->buildXWWWFormUrlEncodeHeader());
+        $res = $this->post(Url::SYNC_QUERY_URI, $data, $this->buildXWWWFormUrlEncodeHeader());
         if ($res['status'] != Config::RESULT_STATUS_OK) {
             throw new ExpressException($res['message']);
         }
@@ -80,7 +80,7 @@ class ExpressDelivery extends AccomplishAbsClass
             'schema' => 'json',
             'param' => $param,
         ];
-        $res = $this->post(Url::SUBSCRIPTION_URI . '?' . $this->eachBuildQuery($data), $this->buildXWWWFormUrlEncodeHeader());
+        $res = $this->post(Url::SUBSCRIPTION_URI, $data, $this->buildXWWWFormUrlEncodeHeader());
         if (!$res['result']) {
             throw new ExpressException($res['message']);
         }
