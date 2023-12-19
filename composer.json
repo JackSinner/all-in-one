@@ -1,5 +1,5 @@
 {
-  "name": "library/europe",
+  "name": "monsteryuan/europe",
   "description": "php library",
   "type": "library",
   "autoload": {
